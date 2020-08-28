@@ -17,7 +17,7 @@ import (
 func ProcessFeedEntries(store *storage.Storage, feed *model.Feed) {
 	for _, entry := range feed.Entries {
 		logger.Debug("[Feed #%d] Processing entry %s", feed.ID, entry.URL)
-
+        logger.Info(feed.BlacklistRules)
 		if feed.Crawler {
 			if !store.EntryURLExists(feed.ID, entry.URL) {
 				content, err := scraper.Fetch(entry.URL, feed.ScraperRules, feed.UserAgent)
