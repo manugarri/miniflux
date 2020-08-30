@@ -92,6 +92,7 @@ type Feed struct {
 	ParsingErrorCount  int       `json:"parsing_error_count,omitempty"`
 	ScraperRules       string    `json:"scraper_rules"`
 	RewriteRules       string    `json:"rewrite_rules"`
+	BlacklistRules     string    `json:"blacklist_rules"`
 	Crawler            bool      `json:"crawler"`
 	UserAgent          string    `json:"user_agent"`
 	Username           string    `json:"username"`
@@ -101,16 +102,17 @@ type Feed struct {
 
 // FeedModification represents changes for a feed.
 type FeedModification struct {
-	FeedURL      *string `json:"feed_url"`
-	SiteURL      *string `json:"site_url"`
-	Title        *string `json:"title"`
-	ScraperRules *string `json:"scraper_rules"`
-	RewriteRules *string `json:"rewrite_rules"`
-	Crawler      *bool   `json:"crawler"`
-	UserAgent    *string `json:"user_agent"`
-	Username     *string `json:"username"`
-	Password     *string `json:"password"`
-	CategoryID   *int64  `json:"category_id"`
+	FeedURL        *string `json:"feed_url"`
+	SiteURL        *string `json:"site_url"`
+	Title          *string `json:"title"`
+	ScraperRules   *string `json:"scraper_rules"`
+	RewriteRules   *string `json:"rewrite_rules"`
+	BlacklistRules *string    `json:"blacklist_rules"`
+	Crawler        *bool   `json:"crawler"`
+	UserAgent      *string `json:"user_agent"`
+	Username       *string `json:"username"`
+	Password       *string `json:"password"`
+	CategoryID     *int64  `json:"category_id"`
 }
 
 // FeedIcon represents the feed icon.

@@ -21,6 +21,7 @@ type SubscriptionForm struct {
 	Password     string
 	ScraperRules string
 	RewriteRules string
+    BlacklistRules string
 }
 
 // Validate makes sure the form values are valid.
@@ -48,5 +49,6 @@ func NewSubscriptionForm(r *http.Request) *SubscriptionForm {
 		Password:     r.FormValue("feed_password"),
 		ScraperRules: r.FormValue("scraper_rules"),
 		RewriteRules: r.FormValue("rewrite_rules"),
+		BlacklistRules: r.FormValue("blacklist_rules"),
 	}
 }

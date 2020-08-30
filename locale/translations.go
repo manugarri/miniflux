@@ -598,6 +598,7 @@ var translations = map[string]string{
     "form.feed.label.user_agent": "Override Default User Agent",
     "form.feed.label.scraper_rules": "Scraper Rules",
     "form.feed.label.rewrite_rules": "Rewrite Rules",
+    "form.feed.label.blacklist_rules": "BlackList Rules",
     "form.feed.label.ignore_http_cache": "Ignore HTTP cache",
     "form.feed.label.disabled": "Do not refresh this feed",
     "form.category.label.title": "Title",

@@ -83,6 +83,9 @@ var templateViewsMap = map[string]string{
 
                 <label for="form-rewrite-rules">{{ t "form.feed.label.rewrite_rules" }}</label>
                 <input type="text" name="rewrite_rules" id="form-rewrite-rules" value="{{ .form.RewriteRules }}">
+
+                <label for="form-blacklist-rules">{{ t "form.feed.label.blacklist_rules" }}</label>
+                <input type="text" name="blacklist_rules" id="form-blacklist-rules" value="{{ .form.BlacklistRules }}">
             </div>
         </details>
 
@@ -380,6 +383,7 @@ var templateViewsMap = map[string]string{
     <input type="hidden" name="feed_password" value="{{ .form.Password }}">
     <input type="hidden" name="scraper_rules" value="{{ .form.ScraperRules }}">
     <input type="hidden" name="rewrite_rules" value="{{ .form.RewriteRules }}">
+    <input type="hidden" name="blacklist_rules" value="{{ .form.BlacklistRules }}">
     {{ if .form.Crawler }}
         <input type="hidden" name="crawler" value="1">
     {{ end }}
@@ -582,6 +586,9 @@ var templateViewsMap = map[string]string{
 
         <label for="form-rewrite-rules">{{ t "form.feed.label.rewrite_rules" }}</label>
         <input type="text" name="rewrite_rules" id="form-rewrite-rules" value="{{ .form.RewriteRules }}">
+
+        <label for="form-blacklist-rules">{{ t "form.feed.label.blacklist_rules" }}</label>
+        <input type="text" name="blacklist_rules" id="form-blacklist-rules" value="{{ .form.BlacklistRules }}">
 
         <label for="form-category">{{ t "form.feed.label.category" }}</label>
         <select id="form-category" name="category_id">

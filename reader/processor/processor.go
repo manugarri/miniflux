@@ -5,6 +5,8 @@
 package processor
 
 import (
+    "regexp"
+
 	"miniflux.app/logger"
 	"miniflux.app/model"
 	"miniflux.app/reader/rewrite"
@@ -17,7 +19,6 @@ import (
 func ProcessFeedEntries(store *storage.Storage, feed *model.Feed) {
 	for _, entry := range feed.Entries {
 		logger.Debug("[Feed #%d] Processing entry %s", feed.ID, entry.URL)
-        logger.Info(feed.BlacklistRules)
 		if feed.Crawler {
 			if !store.EntryURLExists(feed.ID, entry.URL) {
 				content, err := scraper.Fetch(entry.URL, feed.ScraperRules, feed.UserAgent)
@@ -35,6 +36,27 @@ func ProcessFeedEntries(store *storage.Storage, feed *model.Feed) {
 		// The sanitizer should always run at the end of the process to make sure unsafe HTML is filtered.
 		entry.Content = sanitizer.Sanitize(entry.URL, entry.Content)
 	}
+    logger.Info("BeforeFilter %d", len(feed.Entries))
+    filterFeedEntries(feed)
+    logger.Info("AfterFilter %d", len(feed.Entries))
+}
+
+// Filters feed entries
+func filterFeedEntries(feed *model.Feed) {
+    logger.Info("Blacklist Rules %s", feed.BlacklistRules)
+    var filteredEntries []*model.Entry
+    if len(feed.BlacklistRules)>0 {
+        logger.Info("BLACKLIST FILTER %s", feed.BlacklistRules)
+        for _, entry := range feed.Entries {
+            match, _ := regexp.MatchString(feed.BlacklistRules, entry.Title)
+            if match == true {
+               logger.Info("BLACKLIST: %s", entry.Title)
+            } else {
+               filteredEntries = append(filteredEntries, entry)
+            }
+        }
+      feed.Entries = filteredEntries
+    }
 }
 
 // ProcessEntryWebPage downloads the entry web page and apply rewrite rules.

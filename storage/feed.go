@@ -27,6 +27,7 @@ var feedListQuery = `
 		f.parsing_error_msg,
 		f.scraper_rules,
 		f.rewrite_rules,
+		f.blacklist_rules,
 		f.crawler,
 		f.user_agent,
 		f.username,
@@ -128,6 +129,7 @@ func (s *Storage) FeedsByCategoryWithCounters(userID, categoryID int64) (model.F
 			f.parsing_error_msg,
 			f.scraper_rules,
 			f.rewrite_rules,
+            f.blacklist_rules,
 			f.crawler,
 			f.user_agent,
 			f.username,
@@ -237,6 +239,7 @@ func (s *Storage) fetchFeeds(feedQuery, counterQuery string, args ...interface{}
 			&feed.ParsingErrorMsg,
 			&feed.ScraperRules,
 			&feed.RewriteRules,
+			&feed.BlacklistRules,
 			&feed.Crawler,
 			&feed.UserAgent,
 			&feed.Username,
@@ -321,6 +324,7 @@ func (s *Storage) FeedByID(userID, feedID int64) (*model.Feed, error) {
 			f.parsing_error_msg,
 			f.scraper_rules,
 			f.rewrite_rules,
+			f.blacklist_rules,
 			f.crawler,
 			f.user_agent,
 			f.username,
@@ -352,6 +356,7 @@ func (s *Storage) FeedByID(userID, feedID int64) (*model.Feed, error) {
 		&feed.ParsingErrorMsg,
 		&feed.ScraperRules,
 		&feed.RewriteRules,
+		&feed.BlacklistRules,
 		&feed.Crawler,
 		&feed.UserAgent,
 		&feed.Username,
@@ -396,10 +401,11 @@ func (s *Storage) CreateFeed(feed *model.Feed) error {
 			password,
 			disabled,
 			scraper_rules,
-			rewrite_rules
+			rewrite_rules,
+            blacklist_rules
 		)
 		VALUES
-			($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+			($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
 		RETURNING
 			id
 	`
@@ -419,6 +425,7 @@ func (s *Storage) CreateFeed(feed *model.Feed) error {
 		feed.Disabled,
 		feed.ScraperRules,
 		feed.RewriteRules,
+		feed.BlacklistRules,
 	).Scan(&feed.ID)
 	if err != nil {
 		return fmt.Errorf(`store: unable to create feed %q: %v`, feed.FeedURL, err)
@@ -456,15 +463,16 @@ func (s *Storage) UpdateFeed(feed *model.Feed) (err error) {
 			parsing_error_count=$9,
 			scraper_rules=$10,
 			rewrite_rules=$11,
-			crawler=$12,
-			user_agent=$13,
-			username=$14,
-			password=$15,
-			disabled=$16,
-			next_check_at=$17,
-			ignore_http_cache=$18
+			blacklist_rules=$12,
+			crawler=$13,
+			user_agent=$14,
+			username=$15,
+			password=$16,
+			disabled=$17,
+			next_check_at=$18,
+			ignore_http_cache=$19
 		WHERE
-			id=$19 AND user_id=$20
+			id=$20 AND user_id=$21
 	`
 	_, err = s.db.Exec(query,
 		feed.FeedURL,
@@ -478,6 +486,7 @@ func (s *Storage) UpdateFeed(feed *model.Feed) (err error) {
 		feed.ParsingErrorCount,
 		feed.ScraperRules,
 		feed.RewriteRules,
+		feed.BlacklistRules,
 		feed.Crawler,
 		feed.UserAgent,
 		feed.Username,

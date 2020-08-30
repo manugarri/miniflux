@@ -32,6 +32,8 @@ type feedCreation struct {
 	Crawler      bool   `json:"crawler"`
 	ScraperRules string `json:"scraper_rules"`
 	RewriteRules string `json:"rewrite_rules"`
+	BlacklistRules     string    `json:"blacklist_rules"`
+
 }
 
 type subscriptionDiscovery struct {

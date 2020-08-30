@@ -1,1 +1,1 @@
-alter table feeds add column blacklist_rules string not null default '';
+alter table feeds add column blacklist_rules text not null default '';
