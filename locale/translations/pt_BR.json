@@ -248,6 +248,7 @@
     "form.feed.label.user_agent": "Sobrescrever o agente de usuário (user-agent) padrão",
     "form.feed.label.scraper_rules": "Regras do scraper",
     "form.feed.label.rewrite_rules": "Regras para o Rewrite",
+    "form.feed.label.blacklist_rules": "Regras de Blacklist",
     "form.feed.label.ignore_http_cache": "Ignorar cache HTTP",
     "form.feed.label.disabled": "Não atualizar esta fonte",
     "form.category.label.title": "Título",
